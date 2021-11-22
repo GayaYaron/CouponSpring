@@ -28,7 +28,7 @@ public class CompanyController extends ClientController{
 	@Autowired
 	private CompanyService service;
 	
-	@GetMapping(path = "login/company")
+	@PostMapping(path = "login/company")
 	public ResponseEntity<LoginResponse> login(@RequestBody LoginBody loginBody) {
 		Optional<LoginResponse> optionalLoginResponse = service.login(loginBody.getEmail(), loginBody.getPassword());
 		if(optionalLoginResponse.isEmpty()) {

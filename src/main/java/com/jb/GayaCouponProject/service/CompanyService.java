@@ -70,24 +70,17 @@ public class CompanyService extends ClientService {
 	 * database with same coupon id to the values of given id
 	 * 
 	 * @param coupon
-	 * @throws NotExistException           - if there is no coupon in the database
-	 *                                     with such id
-	 * @throws MismatchingCompanyException - if the company of the coupon in the
-	 *                                     database is not the same as the service's
-	 *                                     company
+	 * @throws NotExistException           - if there is no such coupon to the company
 	 */
 	@Transactional(readOnly = false)
 	public void updateCoupon(Coupon coupon) {
 		if (coupon != null) {
 			nullUtil.check(coupon.getId(), "coupon id");
-			Optional<Coupon> optionalCoupon = couponRepository.findById(coupon.getId());
-			if (optionalCoupon.isEmpty()) {
+			Optional<Coupon> optionalCoupon = couponRepository.findByIdAndCompanyId(coupon.getId(), clientDetail.getId());
+			if(optionalCoupon.isEmpty()) {
 				throw new NotExistException("coupon");
 			}
-			Coupon databaseCoupon = optionalCoupon.get();
-			if (!databaseCoupon.getCompany().getId().equals(clientDetail.getId())) {
-				throw new NotExistException("coupon");
-			}
+			coupon.setCompany(optionalCoupon.get().getCompany());
 			synchronized (Lock.coupon()) {
 				couponRepository.save(coupon);
 			}

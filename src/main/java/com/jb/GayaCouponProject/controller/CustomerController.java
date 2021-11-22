@@ -26,7 +26,7 @@ public class CustomerController extends ClientController{
 	private CustomerService service;
 
 	@Override
-	@GetMapping(path = "login/customer")
+	@PostMapping(path = "login/customer")
 	public ResponseEntity<LoginResponse> login(@RequestBody LoginBody loginBody) {
 		Optional<LoginResponse> optionalLoginResponse = service.login(loginBody.getEmail(), loginBody.getPassword());
 		if(optionalLoginResponse.isEmpty()) {

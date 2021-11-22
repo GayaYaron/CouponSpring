@@ -2,6 +2,7 @@ package com.jb.GayaCouponProject.repository;
 
 import java.time.LocalDate;
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
@@ -16,5 +17,6 @@ public interface CouponRepository extends JpaRepository<Coupon, Integer>{
 	public boolean existsByCompanyIdAndTitle(Integer companyId, String title);
 	public List<Coupon> findByEndDateBefore(LocalDate date);
 	public List<Coupon> findByCompanyIdAndPriceLessThanEqual(Integer companyId, double maxPrice);
+	public Optional<Coupon> findByIdAndCompanyId(Integer id, Integer companyId);
 	
 }
