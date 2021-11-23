@@ -26,25 +26,33 @@ public class CouponTokenFilter implements Filter, ApplicationContextAware {
 	public void setApplicationContext(ApplicationContext applicationContext) throws BeansException {
 		context = applicationContext;
 	}
-	
+
 	@Override
 	public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain)
 			throws IOException, ServletException {
+
 		HttpServletRequest httpRequest = (HttpServletRequest) request;
 		HttpServletResponse httpResponse = (HttpServletResponse) response;
-		String token = httpRequest.getHeader("Authorization");
-		try {
-			token = token.substring(7);
-			Claims claims = Jwts.parserBuilder().setSigningKey("dfjbv87yfni4rht8hvfhb8r7eyehrdljfcnvbefjhisfhuisfuehghbgruonjv".getBytes())
-					.build().parseClaimsJws(token).getBody();
-			
-			ClientDetail clientDetail = context.getBean(ClientDetail.class);
-			clientDetail.setId(Integer.parseInt(claims.getSubject()));
-			clientDetail.setName(claims.get("clientName").toString());
-			
-		} catch (Exception e) {
-			httpResponse.sendError(HttpServletResponse.SC_UNAUTHORIZED);
+
+		String method = httpRequest.getMethod();
+		if (method.equals("OPTIONS")) {
+			chain.doFilter(httpRequest, httpResponse);
+		} else {
+			String token = httpRequest.getHeader("Authorization");
+			try {
+				token = token.substring(7);
+				Claims claims = Jwts.parserBuilder()
+						.setSigningKey("dfjbv87yfni4rht8hvfhb8r7eyehrdljfcnvbefjhisfhuisfuehghbgruonjv".getBytes())
+						.build().parseClaimsJws(token).getBody();
+
+				ClientDetail clientDetail = context.getBean(ClientDetail.class);
+				clientDetail.setId(Integer.parseInt(claims.getSubject()));
+				clientDetail.setName(claims.get("clientName").toString());
+
+			} catch (Exception e) {
+				httpResponse.sendError(HttpServletResponse.SC_UNAUTHORIZED);
+			}
+			chain.doFilter(httpRequest, httpResponse);
 		}
-		chain.doFilter(httpRequest, httpResponse);
 	}
 }
