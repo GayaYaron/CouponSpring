@@ -26,5 +26,4 @@ public class Category {
 		super();
 		this.value = value;
 	}
-	
 }

@@ -9,6 +9,6 @@ import lombok.ToString;
 public class ErrorDetail {
 	@ToString.Include
 	private static final String FROM = "coupon app";
-	private int code;
+	private int couponSystemCode;
 	private String message;
 }

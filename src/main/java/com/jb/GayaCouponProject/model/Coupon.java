@@ -34,6 +34,7 @@ public class Coupon {
 	@Column(nullable = false)
 	private int amount;
 	private double price;
+	@Column(length = 100000)
 	private String image;
 	@ManyToOne
 	private Category category;
