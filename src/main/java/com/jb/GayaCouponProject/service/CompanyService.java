@@ -10,7 +10,6 @@ import org.springframework.transaction.annotation.Transactional;
 import com.jb.GayaCouponProject.exception.AlreadyExistsException;
 import com.jb.GayaCouponProject.exception.NotExistException;
 import com.jb.GayaCouponProject.exception.util.NullUtil;
-import com.jb.GayaCouponProject.model.CategoryValue;
 import com.jb.GayaCouponProject.model.Company;
 import com.jb.GayaCouponProject.model.Coupon;
 import com.jb.GayaCouponProject.service.response.LoginResponse;
@@ -125,12 +124,11 @@ public class CompanyService extends ClientService {
 	 * @param category
 	 * @return all the coupons of the service's company that are of given category
 	 */
-	public List<Coupon> getCompanyCoupons(CategoryValue categoryValue) {
-		if(categoryValue == null) {
+	public List<Coupon> getCompanyCoupons(Integer categoryId) {
+		if(categoryId == null) {
 			return getCompanyCoupons();
 		}
-		return couponRepository.findByCompanyIdAndCategoryId(clientDetail.getId(),
-				categoryUtil.getCategoryFromValue(categoryValue).getId());
+		return couponRepository.findByCompanyIdAndCategoryId(clientDetail.getId(),categoryId);
 	}
 
 	/**

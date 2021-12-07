@@ -17,7 +17,6 @@ import org.springframework.web.bind.annotation.RequestParam;
 import com.jb.GayaCouponProject.controller.model.LoginBody;
 import com.jb.GayaCouponProject.exception.LoginFailedException;
 import com.jb.GayaCouponProject.exception.NotExistException;
-import com.jb.GayaCouponProject.model.CategoryValue;
 import com.jb.GayaCouponProject.model.Company;
 import com.jb.GayaCouponProject.model.Coupon;
 import com.jb.GayaCouponProject.service.CompanyService;
@@ -60,8 +59,8 @@ public class CompanyController extends ClientController{
 	}
 	
 	@GetMapping(path = "company/coupon/category")
-	public ResponseEntity<List<Coupon>> getCompanyCoupons(@RequestParam CategoryValue categoryValue) {
-		return ResponseEntity.ok(service.getCompanyCoupons(categoryValue));
+	public ResponseEntity<List<Coupon>> getCompanyCoupons(@RequestParam Integer categoryId) {
+		return ResponseEntity.ok(service.getCompanyCoupons(categoryId));
 	}
 	
 	@GetMapping(path = "company/coupon/price")
