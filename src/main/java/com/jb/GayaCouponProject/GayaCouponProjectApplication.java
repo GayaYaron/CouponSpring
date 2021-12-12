@@ -7,8 +7,9 @@ import org.springframework.context.ConfigurableApplicationContext;
 import com.jb.GayaCouponProject.model.Category;
 import com.jb.GayaCouponProject.model.CategoryValue;
 import com.jb.GayaCouponProject.model.Company;
+import com.jb.GayaCouponProject.model.Customer;
 import com.jb.GayaCouponProject.repository.CategoryRepository;
-import com.jb.GayaCouponProject.repository.CompanyRepository;
+import com.jb.GayaCouponProject.service.AdminService;
 
 
 @SpringBootApplication
@@ -26,9 +27,14 @@ public class GayaCouponProjectApplication {
 			}
 		}
 		
-		CompanyRepository companyRepository = context.getBean(CompanyRepository.class);
-		if(companyRepository.findAll().size()==0) {
-			companyRepository.save(new Company("company2", "company2@email.com", "pass2"));
+		AdminService adminService = context.getBean(AdminService.class);
+		
+		if(adminService.getAllCompanies().size() == 0) {
+			adminService.addCompany(new Company("company2", "company2@email.com", "pass2"));
+		}
+		
+		if(adminService.getAllCustomers().size() == 0) {
+			adminService.addCustomer(new Customer("cuto", "mer", "customer@email.com", "cus2"));
 		}
 	}
 

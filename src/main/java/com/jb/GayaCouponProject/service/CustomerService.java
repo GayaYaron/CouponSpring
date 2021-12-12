@@ -15,7 +15,6 @@ import com.jb.GayaCouponProject.exception.CouponExpiredException;
 import com.jb.GayaCouponProject.exception.NoMoreCouponsException;
 import com.jb.GayaCouponProject.exception.NotExistException;
 import com.jb.GayaCouponProject.exception.util.NullUtil;
-import com.jb.GayaCouponProject.model.CategoryValue;
 import com.jb.GayaCouponProject.model.Coupon;
 import com.jb.GayaCouponProject.model.Customer;
 import com.jb.GayaCouponProject.model.Purchase;
@@ -103,12 +102,12 @@ public class CustomerService extends ClientService {
 	 * @return a list of coupons purchased by the customer that logged in and are of
 	 *         the entered category
 	 */
-	public List<Coupon> getCustomerCoupons(CategoryValue categoryValue) {
-		if(categoryValue == null) {
+	public List<Coupon> getCustomerCoupons(Integer categoryId) {
+		if(categoryId == null) {
 			return getCustomerCoupons();
 		}
 		return getCustomerCoupons().stream()
-				.filter(coupon -> coupon.getCategory().equals(categoryUtil.getCategoryFromValue(categoryValue)))
+				.filter(coupon -> coupon.getCategory().getId().equals(categoryId))
 				.collect(Collectors.toList());
 	}
 
