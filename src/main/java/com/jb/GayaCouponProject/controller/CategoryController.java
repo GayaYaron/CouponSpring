@@ -8,16 +8,16 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.jb.GayaCouponProject.model.Category;
-import com.jb.GayaCouponProject.repository.CategoryRepository;
+import com.jb.GayaCouponProject.service.CategoryService;
 
 @RestController
 public class CategoryController {
 	@Autowired
-	private CategoryRepository repo;
+	private CategoryService service;
 	
 	@GetMapping(path = "category/all")
 	public ResponseEntity<List<Category>> getCategories() {
-		return ResponseEntity.ok(repo.findAll());
+		return ResponseEntity.ok(service.getAllCategories());
 	}
 
 }
