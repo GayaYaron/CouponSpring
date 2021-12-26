@@ -48,4 +48,17 @@ public class Coupon {
 		this.amount = amount;
 		this.category = category;
 	}
+
+	public Coupon(String title, String description, LocalDate startDate, LocalDate endDate, int amount, double price,
+			String image, Category category) {
+		super();
+		this.title = title;
+		this.description = description;
+		this.startDate = startDate;
+		this.endDate = endDate;
+		this.amount = amount;
+		this.price = price;
+		this.image = image;
+		this.category = category;
+	}
 }
